@@ -12,6 +12,7 @@ Librerias y Modulos
 from mysql import mysql_connection as MySQL
 from pos.pos_nltk import nltk_pos_tagger as NLTK_Tagger
 from pos.pos_spacy import spacy_pos_tagger as SPACY_Tagger
+from pos.pos_stanford import pos_tagger as STANFORD_Tagger
 from grounding.stemmer import stemmer
 from grounding.lemmatizer import lemmatizer
 import words_extraction
@@ -51,3 +52,12 @@ adjectives = words_extraction.Words_Extraction().detect_adjectives(tokens)
 nounsFreq = words_extraction.Words_Extraction().returnWordFrequency(nouns, 10)
 adjectivesFreq = words_extraction.Words_Extraction().returnWordFrequency(adjectives, 10)
 verbsFreq = words_extraction.Words_Extraction().returnWordFrequency(verbs, 10)
+
+"""
+Analisis POS con STANFORD
+"""
+tokens = STANFORD_Tagger.POS_tagger().returnTokens(df)
+
+verbs = STANFORD_Tagger.POS_tagger().detect_verbs(tokens)
+nouns = STANFORD_Tagger.POS_tagger().detect_nouns(tokens)
+adjectives = STANFORD_Tagger.POS_tagger().detect_adjectives(tokens)
