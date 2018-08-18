@@ -15,13 +15,14 @@ from pos.pos_spacy import spacy_pos_tagger as SPACY_Tagger
 from pos.pos_stanford import pos_tagger as STANFORD_Tagger
 from grounding.stemmer import stemmer
 from grounding.lemmatizer import lemmatizer
+from ner.ner_spacy import spacy_ner as NER
 import words_extraction
 import time
 
 """
 Conexion con la Base de Datos y creacion de DataFrame
 """
-mySQLConnection = MySQL.MySQLConnection("localhost", "marcelo", "pass", "noticias")
+mySQLConnection = MySQL.MySQLConnection("localhost", "marcelo", "130722ml", "noticias")
 df = mySQLConnection.createDataFrame()
 
 """
@@ -125,3 +126,9 @@ adjectives = words_extraction.Words_Extraction().detect_adjectives(stemmerTokens
 nounsFreq = words_extraction.Words_Extraction().returnWordFrequency(nouns, 20)
 adjectivesFreq = words_extraction.Words_Extraction().returnWordFrequency(adjectives, 20)
 verbsFreq = words_extraction.Words_Extraction().returnWordFrequency(verbs, 20)
+
+
+"""
+Analisis NER con Spacy
+"""
+nerDict = NER.SPACY_NER().returnNER(df)
