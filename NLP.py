@@ -22,7 +22,7 @@ import time
 """
 Conexion con la Base de Datos y creacion de DataFrame
 """
-mySQLConnection = MySQL.MySQLConnection("localhost", "marcelo", "130722ml", "noticias")
+mySQLConnection = MySQL.MySQLConnection("localhost", "marcelo", "pss", "noticias")
 df = mySQLConnection.createDataFrame()
 
 """
