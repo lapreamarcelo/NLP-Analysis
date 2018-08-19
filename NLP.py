@@ -22,7 +22,7 @@ import time
 """
 Conexion con la Base de Datos y creacion de DataFrame
 """
-mySQLConnection = MySQL.MySQLConnection("localhost", "marcelo", "pss", "noticias")
+mySQLConnection = MySQL.MySQLConnection("localhost", "marcelo", "130722ml", "noticias")
 df = mySQLConnection.createDataFrame()
 
 """
@@ -131,4 +131,7 @@ verbsFreq = words_extraction.Words_Extraction().returnWordFrequency(verbs, 20)
 """
 Analisis NER con Spacy
 """
-nerDict = NER.SPACY_NER().returnNER(df)
+articles = NER.SPACY_NER().getArticles(df)
+entities = NER.SPACY_NER().getEntities(articles)
+counter = NER.SPACY_NER().countEntities(articles)
+mostCommon = NER.SPACY_NER().mostCommons(articles, 10)
