@@ -10,7 +10,7 @@ import spacy
 from nltk.corpus import stopwords
 from collections import Counter
 
-class spacy_ner:
+class SpacyNer:
 
     def get_articles(self, data_frame):
         articles = []

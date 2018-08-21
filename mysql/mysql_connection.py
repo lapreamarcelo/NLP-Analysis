@@ -5,7 +5,6 @@ Created on Wed Jun 13 23:12:16 2018
 
 @author: marcelolaprea
 """
-
 import MySQLdb
 import pandas as pd
 
@@ -18,7 +17,7 @@ class MySQLConnection:
         self.dataBaseName = dataBaseName
     
     #Funcion para crear el DataFrame a partir de los datos de la Base de Datos   
-    def createDataFrame(self):
+    def create_data_frame(self):
         #Conexion con la BD
         db = MySQLdb.connect(self.host, self.user, self.passw, self.dataBaseName)
         
@@ -29,10 +28,10 @@ class MySQLConnection:
         cursor.execute("SELECT title FROM full_news_from_agencia_efe")
         
         #Creamos una lista de titles
-        titlesList = self.runQuery(cursor)
+        titles_list = self.run_query(cursor)
         
         #Creamos el dataframe a partir de la lista creada previamente    
-        df = pd.DataFrame(titlesList)
+        df = pd.DataFrame(titles_list)
         
         #Definimos el nombre de la columna
         df.columns = ['Title']
@@ -41,12 +40,12 @@ class MySQLConnection:
     
     
     #Funcion que ejecuta la query y retorna una lista con el resultado
-    def runQuery(self, cursor):
-        titleList = []
+    def run_query(self, cursor):
+        title_list = []
         
         #Recorremos el resultado obtenido del query y agregamos cada titulo a la lista creada previamente
         for row in cursor.fetchall():
             title = row[0]
-            titleList.append(title)
+            title_list.append(title)
         
-        return titleList
+        return title_list

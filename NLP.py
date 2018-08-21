@@ -9,6 +9,9 @@ Created on Wed Jun 13 23:09:23 2018
 """
 Librerias y Modulos
 """
+import time
+import words_extraction
+
 from mysql import mysql_connection as MySQL
 from pos.pos_nltk import nltk_pos_tagger as NLTK_Tagger
 from pos.pos_spacy import spacy_pos_tagger as SPACY_Tagger
@@ -16,34 +19,32 @@ from pos.pos_stanford import pos_tagger as STANFORD_Tagger
 from grounding.stemmer import stemmer
 from grounding.lemmatizer import lemmatizer
 from ner.ner_spacy import spacy_ner as NER
-import words_extraction
-import time
+
 
 """
 Conexion con la Base de Datos y creacion de DataFrame
 """
-mySQLConnection = MySQL.MySQLConnection("localhost", "marcelo", "pass", "noticias")
-df = mySQLConnection.createDataFrame()
+my_sql_connection = MySQL.MySQLConnection("localhost", "marcelo", "130722ml", "noticias")
+df = my_sql_connection.create_data_frame()
 
 """
 Frecuencia de las diferentes palabras
 """
 
-def returnWords(dataFrame): 
+def return_words(data_frame): 
     words = []
     
-    for word in dataFrame['Title']:
+    for word in data_frame['Title']:
         word = word.split()
         words += (word)
     
     return words
 
 start_time = time.time()
-words = returnWords(df)
+words = return_words(df)
 end_time = time.time() - start_time
 
-wordsFreq = words_extraction.Words_Extraction().returnWordFrequency(words, 20)
-
+words_freq = words_extraction.Words_Extraction().returnWordFrequency(words, 20)
 
 """
 Analisis POS con NLTK
@@ -131,7 +132,7 @@ verbsFreq = words_extraction.Words_Extraction().returnWordFrequency(verbs, 20)
 """
 Analisis NER con Spacy
 """
-articles = NER.spacy_ner().get_articles(df)
-entities = NER.spacy_ner().get_entities(articles)
-counter = NER.spacy_ner().count_entities(articles)
-most_common = NER.spacy_ner().most_commons(articles, 10)
+articles = NER.SpacyNer().get_articles(df)
+entities = NER.SpacyNer().get_entities(articles)
+counter = NER.SpacyNer().count_entities(articles)
+most_common = NER.SpacyNer().most_commons(articles, 10)

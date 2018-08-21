@@ -5,7 +5,6 @@ Created on Thu Jun 14 00:10:00 2018
 
 @author: marcelolaprea
 """
-
 import nltk
 from nltk.probability import FreqDist
 

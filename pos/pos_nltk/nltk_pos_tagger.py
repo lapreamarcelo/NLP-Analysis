@@ -5,10 +5,10 @@ Created on Wed Jun 13 23:56:24 2018
 
 @author: marcelolaprea
 """
-
-import nltk
-from nltk.corpus import stopwords
 import string
+import nltk
+
+from nltk.corpus import stopwords
 
 #Instalando las librerias faltantes
 #nltk.download('averaged_perceptron_tagger')
