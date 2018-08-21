@@ -131,7 +131,7 @@ verbsFreq = words_extraction.Words_Extraction().returnWordFrequency(verbs, 20)
 """
 Analisis NER con Spacy
 """
-articles = NER.SPACY_NER().getArticles(df)
-entities = NER.SPACY_NER().getEntities(articles)
-counter = NER.SPACY_NER().countEntities(articles)
-mostCommon = NER.SPACY_NER().mostCommons(articles, 10)
+articles = NER.spacy_ner().get_articles(df)
+entities = NER.spacy_ner().get_entities(articles)
+counter = NER.spacy_ner().count_entities(articles)
+most_common = NER.spacy_ner().most_commons(articles, 10)

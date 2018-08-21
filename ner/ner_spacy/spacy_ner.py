@@ -6,6 +6,8 @@ Created on Sat Aug 18 22:04:19 2018
 @author: marcelolaprea
 """
 import spacy
+
+from nltk.corpus import stopwords
 from collections import Counter
 
 class spacy_ner:
@@ -16,6 +18,7 @@ class spacy_ner:
         
         for sentence in data_frame['Title']:
             doc = nlp(sentence)
+            
             articles.append(doc)
             
         return articles
@@ -26,8 +29,11 @@ class spacy_ner:
         
         for article in articles:
             
-            for entity in article.ents:
-                entities.append({entity.label_: entity.text})
+            for entity in article.ents:              
+                stop_words = set(stopwords.words('spanish'))
+                
+                if entity.text.isalpha() and entity not in stop_words:
+                    entities.append({entity.label_: entity.text})
                 
         return entities
     
@@ -38,7 +44,10 @@ class spacy_ner:
         for article in articles:
             
             for entity in article.ents:
-                labels.append(entity.label_)
+                stop_words = set(stopwords.words('spanish'))
+                
+                if entity.text.isalpha() and entity not in stop_words:
+                    labels.append(entity.label_)   
                 
         return Counter(labels)
     
@@ -49,23 +58,9 @@ class spacy_ner:
         for article in articles:
             
             for entity in article.ents:
-                items.append(entity.text)
+                stop_words = set(stopwords.words('spanish'))
+                
+                if entity.text.isalpha() and entity not in stop_words:
+                    items.append(entity.text)
         
         return Counter(items).most_common(most_common)
-
-
-
-def getArticles(dataFrame):
-        articles = []
-        nlp = spacy.load('es_core_news_sm')
-        
-        for sentence in dataFrame['Title']:
-            article = ""
-            
-            doc = nlp(sentence)
-            articles.append(doc)
-            
-        return articles
-    
-    
-articles = getArticles(df)
