@@ -10,7 +10,7 @@ Created on Wed Jun 13 23:09:23 2018
 Librerias y Modulos
 """
 import time
-import words_extraction
+import words_extraction as extraction
 
 from mysql import mysql_connection as MySQL
 from pos.pos_nltk import nltk_pos_tagger as NLTK_Tagger
@@ -25,7 +25,7 @@ Conexion con la Base de Datos y creacion de DataFrame
 """
 my_sql_connection = MySQL.MySQLConnection("localhost", 
                                           "marcelo", 
-                                          "130722ml", 
+                                          "pass", 
                                           "noticias")
 
 df = my_sql_connection.create_data_frame()
@@ -47,7 +47,7 @@ start_time = time.time()
 words = return_words(df)
 end_time = time.time() - start_time
 
-words_freq = words_extraction.Words_Extraction().return_word_frequency(words, 20)
+words_freq = extraction.Words_Extraction().return_word_frequency(words, 20)
 
 """
 Analisis POS con NLTK
@@ -61,13 +61,13 @@ lemmatizer_tokens = lemmatizer.Lemmatizer_Grounding().return_tokens(tokens)
 
 tagged = NLTK_Tagger.NLTK_POS_Tagger().return_tagged_words(tokens)
 
-verbs = words_extraction.Words_Extraction().detect_verbs(stemmer_tokens)
-nouns = words_extraction.Words_Extraction().detect_nouns(stemmer_tokens)
-adjectives = words_extraction.Words_Extraction().detect_adjectives(stemmer_tokens)
+verbs = extraction.Words_Extraction().detect_verbs(stemmer_tokens)
+nouns = extraction.Words_Extraction().detect_nouns(stemmer_tokens)
+adjectives = extraction.Words_Extraction().detect_adjectives(stemmer_tokens)
 
-nouns_freq = words_extraction.Words_Extraction().return_word_frequency(nouns, 20)
-adjectives_freq = words_extraction.Words_Extraction().return_word_frequency(adjectives, 20)
-verbs_freq = words_extraction.Words_Extraction().return_word_frequency(verbs, 20)
+nouns_freq = extraction.Words_Extraction().return_word_frequency(nouns, 20)
+adjectives_freq = extraction.Words_Extraction().return_word_frequency(adjectives, 20)
+verbs_freq = extraction.Words_Extraction().return_word_frequency(verbs, 20)
 end_time = time.time() - start_time
 
 """
@@ -85,13 +85,13 @@ start_time = time.time()
 tokens = SPACY_Tagger.SPACY_POS_Tagger.return_lemma_spacy(df)
 end_time = time.time() - start_time
 
-verbs = words_extraction.Words_Extraction().detect_verbs(tokens)
-nouns = words_extraction.Words_Extraction().detect_nouns(tokens)
-adjectives = words_extraction.Words_Extraction().detect_adjectives(tokens)
+verbs = extraction.Words_Extraction().detect_verbs(tokens)
+nouns = extraction.Words_Extraction().detect_nouns(tokens)
+adjectives = extraction.Words_Extraction().detect_adjectives(tokens)
 
-nouns_freq = words_extraction.Words_Extraction().return_word_frequency(nouns, 20)
-adjectives_freq = words_extraction.Words_Extraction().return_word_frequency(adjectives, 20)
-verbs_freq = words_extraction.Words_Extraction().return_word_frequency(verbs, 20)
+nouns_freq = extraction.Words_Extraction().return_word_frequency(nouns, 20)
+adjectives_freq = extraction.Words_Extraction().return_word_frequency(adjectives, 20)
+verbs_freq = extraction.Words_Extraction().return_word_frequency(verbs, 20)
 
 """
 Analisis POS con STANFORD
@@ -122,13 +122,13 @@ nouns = STANFORD_Tagger.POS_tagger().detect_nouns(tokens)
 adjectives = STANFORD_Tagger.POS_tagger().detect_adjectives(tokens)
 
 #Con Grounding
-verbs = words_extraction.Words_Extraction().detect_verbs(stemmer_tokens)
-nouns = words_extraction.Words_Extraction().detect_nouns(stemmer_tokens)
-adjectives = words_extraction.Words_Extraction().detect_adjectives(stemmer_tokens)
+verbs = extraction.Words_Extraction().detect_verbs(stemmer_tokens)
+nouns = extraction.Words_Extraction().detect_nouns(stemmer_tokens)
+adjectives = extraction.Words_Extraction().detect_adjectives(stemmer_tokens)
 
-nouns_freq = words_extraction.Words_Extraction().returnWordFrequency(nouns, 20)
-adjectives_freq = words_extraction.Words_Extraction().returnWordFrequency(adjectives, 20)
-verbs_freq = words_extraction.Words_Extraction().returnWordFrequency(verbs, 20)
+nouns_freq = extraction.Words_Extraction().returnWordFrequency(nouns, 20)
+adjectives_freq = extraction.Words_Extraction().returnWordFrequency(adjectives, 20)
+verbs_freq = extraction.Words_Extraction().returnWordFrequency(verbs, 20)
 
 """
 Analisis NER con Spacy
