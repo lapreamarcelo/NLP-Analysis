@@ -7,6 +7,7 @@ from nltk.tag.stanford import StanfordPOSTagger
 
 # noinspection PyMethodMayBeStatic
 class POS_tagger_stanford(object):
+    
     def __init__(self):
         """
         Initializes the tagger object

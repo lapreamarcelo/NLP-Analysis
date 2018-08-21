@@ -5,14 +5,14 @@ Created on Thu Jun 14 00:18:48 2018
 
 @author: marcelolaprea
 """
-
-import spacy
-from nltk.corpus import stopwords
 import string
+import spacy
+
+from nltk.corpus import stopwords
 
 class SPACY_POS_Tagger:
     
-    def returnLemmaSpacy(dataFrame):
+    def return_lemma_spacy(dataFrame):
         nlp = spacy.load('es_core_news_sm')
         tokens = []
         
@@ -20,23 +20,23 @@ class SPACY_POS_Tagger:
             doc = nlp(sentence)
             
             for token in doc:
-                posToken = token.lemma_
-                posToken = posToken.lower()
+                pos_token = token.lemma_
+                pos_token = pos_token.lower()
                 
                 #Quitar signos de puntuacion
-                cleanPunctuation = str.maketrans('','', string.punctuation)
-                posToken = posToken.translate(cleanPunctuation)
+                clean_punctuation = str.maketrans('','', string.punctuation)
+                pos_token = pos_token.translate(clean_punctuation)
                 
                 #Eliminamos los stopwords
                 stop_words = set(stopwords.words('spanish'))
                 
-                if posToken.isalpha() and posToken not in stop_words:
-                    tokens.append(posToken)
+                if pos_token.isalpha() and pos_token not in stop_words:
+                    tokens.append(pos_token)
                 
         return tokens
     
     
-    def returnSpacy(dataFrame):
+    def return_spacy(dataFrame):
         nlp = spacy.load('es_core_news_sm')
         tokens = []
         
@@ -44,17 +44,17 @@ class SPACY_POS_Tagger:
             doc = nlp(sentence)
             
             for token in doc:
-                posToken = token.text
-                posToken = posToken.lower()
+                pos_token = token.text
+                pos_token = pos_token.lower()
                 
                 #Quitar signos de puntuacion
-                cleanPunctuation = str.maketrans('','', string.punctuation)
-                posToken = posToken.translate(cleanPunctuation)
+                clean_punctuation = str.maketrans('','', string.punctuation)
+                pos_token = pos_token.translate(clean_punctuation)
                 
                 #Eliminamos los stopwords
                 stop_words = set(stopwords.words('spanish'))
                 
-                if posToken.isalpha() and posToken not in stop_words:
-                    tokens.append(posToken)
+                if pos_token.isalpha() and pos_token not in stop_words:
+                    tokens.append(pos_token)
                 
         return tokens

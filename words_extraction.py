@@ -32,7 +32,7 @@ class Words_Extraction:
         return verbs
     
     #Distribucion de las palabras
-    def returnWordFrequency(self, words, mostCommon):
+    def return_word_frequency(self, words, mostCommon):
         freq = FreqDist(words)
     
         return freq.most_common(mostCommon)

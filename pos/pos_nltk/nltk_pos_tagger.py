@@ -19,16 +19,16 @@ from nltk.corpus import stopwords
 class NLTK_POS_Tagger:
   
     #Funcion para retornar los tokens a partir de la Libreria NLKT
-    def returnTokens(self, dataFrame):
+    def return_tokens(self, data_frame):
         tokens = []
         
-        for sentence in dataFrame['Title']:
+        for sentence in data_frame['Title']:
             token = nltk.word_tokenize(sentence)
             token = [word.lower() for word in token]
             
             #Quitar signos de puntuacion
-            cleanPunctuation = str.maketrans('','', string.punctuation)
-            token = [word.translate(cleanPunctuation) for word in token]
+            clean_punctuation = str.maketrans('','', string.punctuation)
+            token = [word.translate(clean_punctuation) for word in token]
             
             #Eliminar palabras no alfabeticas
             token = [word for word in token if word.isalpha()]
@@ -43,13 +43,13 @@ class NLTK_POS_Tagger:
     
     
     #Funcion para retornar los tagged words
-    def returnTaggedWords(self, tokens):
+    def return_tagged_words(self, tokens):
         tagged = nltk.pos_tag(tokens)
         
         return tagged
     
     #Funcion para retornar la entidad
-    def returnEntities(self, tagged):
+    def return_entities(self, tagged):
         entities = nltk.chunk.ne_chunk(tagged)
         
         return entities

@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-
 from config import *
 from nltk.corpus import cess_esp as cess
 from nltk import UnigramTagger as ut
 import pickle
 
 class POS_tagger_nltk(object):
+    
     def __init__(self):
         """
         Initializes the tagger object

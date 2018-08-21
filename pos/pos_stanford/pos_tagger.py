@@ -5,7 +5,6 @@ Created on Thu Jun 14 12:47:58 2018
 
 @author: marcelolaprea
 """
-
 from config import STANFORD_TAGGER_NAME
 from config import NLTK_TAGGER_NAME
 from config import SPANISH_TAG_SET_NLTK
@@ -15,6 +14,7 @@ from pos.pos_stanford import POS_tagger_nltk as nltk_tagger
 from nltk.tokenize import word_tokenize
 
 class POS_tagger(object):
+    
     def __init__(self):
         """
         Initialize the tagger as specified in the configuration
@@ -81,7 +81,7 @@ class POS_tagger(object):
         return verbs_in_one_sentence
     
     
-    def returnTokens(self, dataFrame):
+    def return_tokens(self, dataFrame):
         tokens = []
     
         for sentence in dataFrame['Title']:

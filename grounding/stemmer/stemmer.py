@@ -11,14 +11,14 @@ from nltk.stem.porter import PorterStemmer
 
 class Stemmer_Grounding:
     
-    def returnStemmerTokens(self, tokens):
+    def return_stemmer_tokens(self, tokens):
         stemmer = Stemmer.Stemmer('spanish')
         words = stemmer.stemWords(tokens)
         
         return words
     
     
-    def returnPorterStemmerTokens(self, tokens):
+    def return_porter_stemmer_tokens(self, tokens):
         porter = PorterStemmer()
         stemmed = [porter.stem(word) for word in tokens]
     

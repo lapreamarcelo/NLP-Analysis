@@ -20,11 +20,14 @@ from grounding.stemmer import stemmer
 from grounding.lemmatizer import lemmatizer
 from ner.ner_spacy import spacy_ner as NER
 
-
 """
 Conexion con la Base de Datos y creacion de DataFrame
 """
-my_sql_connection = MySQL.MySQLConnection("localhost", "marcelo", "130722ml", "noticias")
+my_sql_connection = MySQL.MySQLConnection("localhost", 
+                                          "marcelo", 
+                                          "130722ml", 
+                                          "noticias")
+
 df = my_sql_connection.create_data_frame()
 
 """
@@ -44,27 +47,27 @@ start_time = time.time()
 words = return_words(df)
 end_time = time.time() - start_time
 
-words_freq = words_extraction.Words_Extraction().returnWordFrequency(words, 20)
+words_freq = words_extraction.Words_Extraction().return_word_frequency(words, 20)
 
 """
 Analisis POS con NLTK
 """
 start_time = time.time()
-tokens = NLTK_Tagger.NLTK_POS_Tagger().returnTokens(df)
+tokens = NLTK_Tagger.NLTK_POS_Tagger().return_tokens(df)
 
 
-stemmerTokens = stemmer.Stemmer_Grounding().returnPorterStemmerTokens(tokens)
-lemmatizerTokens = lemmatizer.Lemmatizer_Grounding().returnTokens(tokens)
+stemmer_tokens = stemmer.Stemmer_Grounding().return_porter_stemmer_tokens(tokens)
+lemmatizer_tokens = lemmatizer.Lemmatizer_Grounding().return_tokens(tokens)
 
-tagged = NLTK_Tagger.NLTK_POS_Tagger().returnTaggedWords(tokens)
+tagged = NLTK_Tagger.NLTK_POS_Tagger().return_tagged_words(tokens)
 
-verbs = words_extraction.Words_Extraction().detect_verbs(stemmerTokens)
-nouns = words_extraction.Words_Extraction().detect_nouns(stemmerTokens)
-adjectives = words_extraction.Words_Extraction().detect_adjectives(stemmerTokens)
+verbs = words_extraction.Words_Extraction().detect_verbs(stemmer_tokens)
+nouns = words_extraction.Words_Extraction().detect_nouns(stemmer_tokens)
+adjectives = words_extraction.Words_Extraction().detect_adjectives(stemmer_tokens)
 
-nounsFreq = words_extraction.Words_Extraction().returnWordFrequency(nouns, 20)
-adjectivesFreq = words_extraction.Words_Extraction().returnWordFrequency(adjectives, 20)
-verbsFreq = words_extraction.Words_Extraction().returnWordFrequency(verbs, 20)
+nouns_freq = words_extraction.Words_Extraction().return_word_frequency(nouns, 20)
+adjectives_freq = words_extraction.Words_Extraction().return_word_frequency(adjectives, 20)
+verbs_freq = words_extraction.Words_Extraction().return_word_frequency(verbs, 20)
 end_time = time.time() - start_time
 
 """
@@ -72,23 +75,23 @@ Analisis POS con SPACY
 """
 #Sin grounding
 start_time = time.time()
-tokens = SPACY_Tagger.SPACY_POS_Tagger.returnSpacy(df)
+tokens = SPACY_Tagger.SPACY_POS_Tagger.return_spacy(df)
 end_time = time.time() - start_time
 
-stemmerTokens = stemmer.Stemmer_Grounding().returnPorterStemmerTokens(tokens)
+stemmer_tokens = stemmer.Stemmer_Grounding().return_porter_stemmer_tokens(tokens)
 
 #Con Lemma
 start_time = time.time()
-tokens = SPACY_Tagger.SPACY_POS_Tagger.returnLemmaSpacy(df)
+tokens = SPACY_Tagger.SPACY_POS_Tagger.return_lemma_spacy(df)
 end_time = time.time() - start_time
 
 verbs = words_extraction.Words_Extraction().detect_verbs(tokens)
 nouns = words_extraction.Words_Extraction().detect_nouns(tokens)
 adjectives = words_extraction.Words_Extraction().detect_adjectives(tokens)
 
-nounsFreq = words_extraction.Words_Extraction().returnWordFrequency(nouns, 20)
-adjectivesFreq = words_extraction.Words_Extraction().returnWordFrequency(adjectives, 20)
-verbsFreq = words_extraction.Words_Extraction().returnWordFrequency(verbs, 20)
+nouns_freq = words_extraction.Words_Extraction().return_word_frequency(nouns, 20)
+adjectives_freq = words_extraction.Words_Extraction().return_word_frequency(adjectives, 20)
+verbs_freq = words_extraction.Words_Extraction().return_word_frequency(verbs, 20)
 
 """
 Analisis POS con STANFORD
@@ -97,22 +100,21 @@ from nltk.corpus import stopwords
 import string
 
 start_time = time.time()
-tokens = STANFORD_Tagger.POS_tagger().returnTokens(df)
+tokens = STANFORD_Tagger.POS_tagger().return_tokens(df)
 end_time = time.time() - start_time
 
-stanfordTokens = [word[0] for word in tokens]
+stanford_tokens = [word[0] for word in tokens]
 
 #Cleaning
-stanfordTokens = [word.lower() for word in stanfordTokens]
-cleanPunctuation = str.maketrans('','', string.punctuation)
-stanfordTokens = [word.translate(cleanPunctuation) for word in stanfordTokens]
-stanfordTokens = [word for word in stanfordTokens if word.isalpha()]
+stanford_tokens = [word.lower() for word in stanford_tokens]
+clean_punctuation = str.maketrans('','', string.punctuation)
+stanford_tokens = [word.translate(clean_punctuation) for word in stanford_tokens]
+stanford_tokens = [word for word in stanford_tokens if word.isalpha()]
 stop_words = set(stopwords.words('spanish'))
-stanfordTokens = [word for word in stanfordTokens if not word in stop_words]
+stanford_tokens = [word for word in stanford_tokens if not word in stop_words]
 
-
-stemmerTokens = stemmer.Stemmer_Grounding().returnPorterStemmerTokens(stanfordTokens)
-lemmatizerTokens = lemmatizer.Lemmatizer_Grounding().returnTokens(stanfordTokens)
+stemmer_tokens = stemmer.Stemmer_Grounding().returnPorterStemmerTokens(stanford_tokens)
+lemmatizer_tokens = lemmatizer.Lemmatizer_Grounding().returnTokens(stanford_tokens)
 
 #Sin Grounding
 verbs = STANFORD_Tagger.POS_tagger().detect_verbs(tokens)
@@ -120,14 +122,13 @@ nouns = STANFORD_Tagger.POS_tagger().detect_nouns(tokens)
 adjectives = STANFORD_Tagger.POS_tagger().detect_adjectives(tokens)
 
 #Con Grounding
-verbs = words_extraction.Words_Extraction().detect_verbs(stemmerTokens)
-nouns = words_extraction.Words_Extraction().detect_nouns(stemmerTokens)
-adjectives = words_extraction.Words_Extraction().detect_adjectives(stemmerTokens)
+verbs = words_extraction.Words_Extraction().detect_verbs(stemmer_tokens)
+nouns = words_extraction.Words_Extraction().detect_nouns(stemmer_tokens)
+adjectives = words_extraction.Words_Extraction().detect_adjectives(stemmer_tokens)
 
-nounsFreq = words_extraction.Words_Extraction().returnWordFrequency(nouns, 20)
-adjectivesFreq = words_extraction.Words_Extraction().returnWordFrequency(adjectives, 20)
-verbsFreq = words_extraction.Words_Extraction().returnWordFrequency(verbs, 20)
-
+nouns_freq = words_extraction.Words_Extraction().returnWordFrequency(nouns, 20)
+adjectives_freq = words_extraction.Words_Extraction().returnWordFrequency(adjectives, 20)
+verbs_freq = words_extraction.Words_Extraction().returnWordFrequency(verbs, 20)
 
 """
 Analisis NER con Spacy

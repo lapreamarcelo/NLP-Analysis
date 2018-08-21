@@ -5,7 +5,6 @@ Created on Thu Jun 14 11:30:45 2018
 
 @author: marcelolaprea
 """
-
 from config import LEMMATIZATION_FILE_PATH
 from collections import defaultdict
 
@@ -48,8 +47,8 @@ class Lemmatizer_Grounding(object):
         return lemma
     
     
-    def returnTokens(self, tokens):
+    def return_tokens(self, tokens):
         
-        lemmatizerTokens = [self.get_lemma(word) for word in tokens]
+        lemmatizer_tokens = [self.get_lemma(word) for word in tokens]
         
-        return lemmatizerTokens
+        return lemmatizer_tokens
