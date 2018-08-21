@@ -73,16 +73,18 @@ end_time = time.time() - start_time
 """
 Analisis POS con SPACY
 """
+articles = SPACY_Tagger.SPACY_POS_Tagger().get_articles(df)
+
 #Sin grounding
 start_time = time.time()
-tokens = SPACY_Tagger.SPACY_POS_Tagger.return_spacy(df)
+tokens = SPACY_Tagger.SPACY_POS_Tagger().return_tokens(articles)
 end_time = time.time() - start_time
 
 stemmer_tokens = stemmer.Stemmer_Grounding().return_porter_stemmer_tokens(tokens)
 
 #Con Lemma
 start_time = time.time()
-tokens = SPACY_Tagger.SPACY_POS_Tagger.return_lemma_spacy(df)
+tokens = SPACY_Tagger.SPACY_POS_Tagger().return_lemma_tokens(articles)
 end_time = time.time() - start_time
 
 verbs = extraction.Words_Extraction().detect_verbs(tokens)
@@ -92,6 +94,10 @@ adjectives = extraction.Words_Extraction().detect_adjectives(tokens)
 nouns_freq = extraction.Words_Extraction().return_word_frequency(nouns, 20)
 adjectives_freq = extraction.Words_Extraction().return_word_frequency(adjectives, 20)
 verbs_freq = extraction.Words_Extraction().return_word_frequency(verbs, 20)
+
+#Tags
+tags_lemma = SPACY_Tagger.SPACY_POS_Tagger().return_lemma_pos_tags(articles)
+tags = SPACY_Tagger.SPACY_POS_Tagger().return_pos_tags(articles)
 
 """
 Analisis POS con STANFORD
