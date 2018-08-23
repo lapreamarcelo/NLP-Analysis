@@ -55,7 +55,6 @@ Analisis POS con NLTK
 start_time = time.time()
 tokens = NLTK_Tagger.NLTK_POS_Tagger().return_tokens(df)
 
-
 stemmer_tokens = stemmer.Stemmer_Grounding().return_porter_stemmer_tokens(tokens)
 lemmatizer_tokens = lemmatizer.Lemmatizer_Grounding().return_tokens(tokens)
 
@@ -69,6 +68,8 @@ nouns_freq = extraction.Words_Extraction().return_word_frequency(nouns, 20)
 adjectives_freq = extraction.Words_Extraction().return_word_frequency(adjectives, 20)
 verbs_freq = extraction.Words_Extraction().return_word_frequency(verbs, 20)
 end_time = time.time() - start_time
+
+tags = NLTK_Tagger.NLTK_POS_Tagger().return_tagged_words(tokens)
 
 """
 Analisis POS con SPACY
@@ -84,12 +85,12 @@ stemmer_tokens = stemmer.Stemmer_Grounding().return_porter_stemmer_tokens(tokens
 
 #Con Lemma
 start_time = time.time()
-tokens = SPACY_Tagger.SPACY_POS_Tagger().return_lemma_tokens(articles)
+lemma_tokens = SPACY_Tagger.SPACY_POS_Tagger().return_lemma_tokens(articles)
 end_time = time.time() - start_time
 
-verbs = extraction.Words_Extraction().detect_verbs(tokens)
-nouns = extraction.Words_Extraction().detect_nouns(tokens)
-adjectives = extraction.Words_Extraction().detect_adjectives(tokens)
+verbs = extraction.Words_Extraction().detect_verbs(stemmer_tokens)
+nouns = extraction.Words_Extraction().detect_nouns(stemmer_tokens)
+adjectives = extraction.Words_Extraction().detect_adjectives(stemmer_tokens)
 
 nouns_freq = extraction.Words_Extraction().return_word_frequency(nouns, 20)
 adjectives_freq = extraction.Words_Extraction().return_word_frequency(adjectives, 20)
@@ -139,7 +140,11 @@ verbs_freq = extraction.Words_Extraction().returnWordFrequency(verbs, 20)
 """
 Analisis NER con Spacy
 """
+
 articles = NER.SpacyNer().get_articles(df)
 entities = NER.SpacyNer().get_entities(articles)
 counter = NER.SpacyNer().count_entities(articles)
-most_common = NER.SpacyNer().most_commons(articles, 10)
+mostCommon = NER.SpacyNer().most_commons(articles, 'LOC', 50, True)
+filter_articles = NER.SpacyNer().filter_articles(articles, "Venezuela")
+
+ner_data_frame = NER.SpacyNer().create_data_frame(filter_articles)
